@@ -1,0 +1,148 @@
+{
+  "candidate_features": [
+    "tp",
+    "tcwv",
+    "d2m",
+    "t2m",
+    "sp",
+    "cape",
+    "u10",
+    "v10",
+    "rh700",
+    "u850",
+    "v850",
+    "RH2m",
+    "wind_speed",
+    "sin_doy",
+    "cos_doy"
+  ],
+  "ranked_features": [
+    "tp",
+    "cos_doy",
+    "wind_speed",
+    "d2m",
+    "u10",
+    "RH2m",
+    "sin_doy",
+    "t2m",
+    "rh700",
+    "u850",
+    "cape",
+    "tcwv",
+    "v10",
+    "sp",
+    "v850"
+  ],
+  "feature_rankings": [
+    {
+      "rank": 1,
+      "feature": "tp",
+      "mi_score": 0.004382986584515229,
+      "mi_std": 0.006688540808632037
+    },
+    {
+      "rank": 2,
+      "feature": "cos_doy",
+      "mi_score": 0.00574822150306795,
+      "mi_std": 0.0061251264093546524
+    },
+    {
+      "rank": 3,
+      "feature": "wind_speed",
+      "mi_score": 0.0055580077986198744,
+      "mi_std": 0.005198681195222852
+    },
+    {
+      "rank": 4,
+      "feature": "d2m",
+      "mi_score": 0.0047193584724943465,
+      "mi_std": 0.006685247381278543
+    },
+    {
+      "rank": 5,
+      "feature": "u10",
+      "mi_score": 0.004216652750869699,
+      "mi_std": 0.005893899325807432
+    },
+    {
+      "rank": 6,
+      "feature": "RH2m",
+      "mi_score": 0.004027730604115283,
+      "mi_std": 0.004892447715690999
+    },
+    {
+      "rank": 7,
+      "feature": "sin_doy",
+      "mi_score": 0.003728996170580423,
+      "mi_std": 0.005133136777696046
+    },
+    {
+      "rank": 8,
+      "feature": "t2m",
+      "mi_score": 0.0037164104736561792,
+      "mi_std": 0.006333854671603641
+    },
+    {
+      "rank": 9,
+      "feature": "rh700",
+      "mi_score": 0.003650000441136022,
+      "mi_std": 0.0054011500329032465
+    },
+    {
+      "rank": 10,
+      "feature": "u850",
+      "mi_score": 0.003466758063727587,
+      "mi_std": 0.004232491572656262
+    },
+    {
+      "rank": 11,
+      "feature": "cape",
+      "mi_score": 0.0033592193943901747,
+      "mi_std": 0.00543683286873046
+    },
+    {
+      "rank": 12,
+      "feature": "tcwv",
+      "mi_score": 0.0031596672744467202,
+      "mi_std": 0.005262895363300443
+    },
+    {
+      "rank": 13,
+      "feature": "v10",
+      "mi_score": 0.0030043650558900423,
+      "mi_std": 0.006443168600311262
+    },
+    {
+      "rank": 14,
+      "feature": "sp",
+      "mi_score": 0.00288942071021799,
+      "mi_std": 0.00393334841131247
+    },
+    {
+      "rank": 15,
+      "feature": "v850",
+      "mi_score": 0.002645278485962003,
+      "mi_std": 0.004287688476998902
+    }
+  ],
+  "evaluated_K": [
+    6,
+    8,
+    10,
+    12,
+    15
+  ],
+  "optimal_K": 10,
+  "selected_features": [
+    "tp",
+    "cos_doy",
+    "wind_speed",
+    "d2m",
+    "u10",
+    "RH2m",
+    "sin_doy",
+    "t2m",
+    "rh700",
+    "u850"
+  ]
+}

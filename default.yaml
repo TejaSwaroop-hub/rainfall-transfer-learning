@@ -1,0 +1,136 @@
+# Default configuration for Rainfall Transfer Learning
+# Study Domain: Anantapur district, Andhra Pradesh, India (6x6 grid, 36 cells at 0.25 deg)
+
+region:
+  name: "Anantapur"
+  lat_min: 13.6
+  lat_max: 15.1
+  lon_min: 76.6
+  lon_max: 78.1
+  grid_resolution: 0.25
+  n_lat: 6
+  n_lon: 6
+  n_cells: 36
+
+paths:
+  raw_era5: "data/raw/era5"
+  raw_imd: "data/raw/imd"
+  processed: "data/processed"
+  results: "results"
+  figures: "figures"
+  tables: "tables"
+  logs: "logs"
+  report_numbers: "report_numbers.json"
+
+partitions:
+  era5_pretrain_train:
+    start_year: 1979
+    end_year: 2009
+    expected_days_per_cell: 11323
+  era5_pretrain_val:
+    start_year: 2010
+    end_year: 2015
+    expected_days_per_cell: 2191
+  imd_finetune_pool:
+    start_year: 2000
+    end_year: 2015
+    expected_days_per_cell: 5844
+  imd_validation:
+    start_year: 2016
+    end_year: 2018
+    expected_days_per_cell: 1096
+  imd_test:
+    start_year: 2019
+    end_year: 2023
+    fallback_end_year: 2022
+    expected_days_per_cell: 1826
+
+scarcity:
+  n_years: [1, 2, 3, 5, 10, 16]
+
+predictors:
+  single_level:
+    - "tp"      # Total precipitation (m -> mm)
+    - "tcwv"    # Total column water vapour (kg m**-2)
+    - "d2m"     # 2m dewpoint temperature (K -> degC)
+    - "t2m"     # 2m temperature (K -> degC)
+    - "sp"      # Surface pressure (Pa -> hPa)
+    - "cape"    # Convective available potential energy (J kg**-1)
+    - "u10"     # 10m u-component of wind (m s**-1)
+    - "v10"     # 10m v-component of wind (m s**-1)
+  pressure_level:
+    - name: "rh700"  # Relative humidity at 700 hPa (%)
+      variable: "r"
+      level: 700
+    - name: "u850"   # u-component of wind at 850 hPa (m s**-1)
+      variable: "u"
+      level: 850
+    - name: "v850"   # v-component of wind at 850 hPa (m s**-1)
+      variable: "v"
+      level: 850
+  derived:
+    - "RH2m"         # 2m relative humidity via Magnus formula (%)
+    - "wind_speed"   # sqrt(u10**2 + v10**2) (m s**-1)
+    - "sin_doy"      # sin(2 * pi * doy / 365.25)
+    - "cos_doy"      # cos(2 * pi * doy / 365.25)
+  all_15:
+    - "tp"
+    - "tcwv"
+    - "d2m"
+    - "t2m"
+    - "sp"
+    - "cape"
+    - "u10"
+    - "v10"
+    - "rh700"
+    - "u850"
+    - "v850"
+    - "RH2m"
+    - "wind_speed"
+    - "sin_doy"
+    - "cos_doy"
+
+rainfall_classes:
+  thresholds:
+    no_rain: [0.0, 0.1]
+    very_light: [0.1, 2.5]
+    light: [2.5, 15.6]
+    moderate: [15.6, 64.5]
+    heavy: [64.5, 115.6]
+    very_heavy: [115.6, 1.0e9]
+  loss_weights:
+    no_rain: 1.0
+    very_light: 1.0
+    light: 1.5
+    moderate: 2.5
+    heavy: 4.0
+    very_heavy: 4.0
+
+event_thresholds:
+  rainy: 2.5
+  moderate: 15.6
+  heavy: 64.5
+
+model:
+  architecture: "GRU"
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.2
+  lookback_window: 14
+  huber_delta: 1.0
+
+training:
+  seeds: [0, 1, 2, 3, 4]
+  batch_size: 256
+  pretrain:
+    lr: 0.001
+    max_epochs: 100
+    patience: 10
+  finetune:
+    lr: 0.0001
+    max_epochs: 50
+    patience: 5
+
+uncertainty:
+  mc_dropout_passes: 50
+  confidence_interval: 0.90
